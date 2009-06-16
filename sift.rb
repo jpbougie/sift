@@ -4,6 +4,7 @@ require 'sinatra'
 gem 'chriseppstein-compass'
 require 'compass'
 
+require 'httparty'
 
 $: << File.join(File.dirname(__FILE__), 'lib')
 require 'sift/models'
