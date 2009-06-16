@@ -1,7 +1,7 @@
-Siphon = {
+Sift = {
 }
 
-Siphon.Entries = {
+Sift.Entries = {
   active: null,
   list: [],
   
@@ -10,41 +10,46 @@ Siphon.Entries = {
   },
   
   targetFirst: function() {
-    Siphon.Entries.targetNone()
+    Sift.Entries.targetNone()
     $('.entry:first').addClass("target")
   },
   
   targetNone: function() {
-    Siphon.Entries.target.removeClass("target")
+    Sift.Entries.target.removeClass("target")
   },
   
   toggleSelectedTarget: function() {
-    var checkbox = Siphon.Entries.target.find(":checkbox")
+    var checkbox = Sift.Entries.target.find(":checkbox")
     checkbox.attr("checked", !checkbox.attr("checked")).change()
   },
   
   targetNext: function() {
-    var next = Siphon.Entries.target.next()
-    Siphon.Entries.targetNone()
+    var next = Sift.Entries.target.next()
+    Sift.Entries.targetNone()
     
     if(next.length > 0)
       next.addClass("target")
     else
-      Siphon.Entries.targetFirst()
+      Sift.Entries.targetFirst()
+      
+    Sift.Entries.adjustViewForTarget()
   },
   
   targetPrev: function() {
-    var prev = Siphon.Entries.target.prev()
-    Siphon.Entries.targetNone()
+    var prev = Sift.Entries.target.prev()
+    Sift.Entries.targetNone()
     
     if(prev.length > 0)
       prev.addClass("target")
     else
       $('.entry:last').addClass("target")
+    
+    Sift.Entries.adjustViewForTarget()
+    
   },
   
   showEntry: function(entry) {
-    Siphon.Entries.active = entry
+    Sift.Entries.active = entry
     
     $('#entries .entry').each(function() {
         var current = $(this)
@@ -62,12 +67,25 @@ Siphon.Entries = {
     $('#entries .select').addClass("hidden")
   },
   
+  adjustViewForTarget: function() {
+      var elem = Sift.Entries.target
+      if (!elem.offset()) return
+      if (elem.offset().top - $(window).scrollTop() + 20 > $(window).height()) {
+          elem.scrollTo(10)
+      } else if (elem.offset().top - $(window).scrollTop() < 0) {
+          $('html,body').animate({
+              scrollTop: elem.offset().top - $(window).height()
+          },
+          10);
+      }
+  },
+  
   showTarget: function() {
-    Siphon.Entries.showEntry(Siphon.Entries.target.attr("id").split("_")[1])
+    Sift.Entries.showEntry(Sift.Entries.target.attr("id").split("_")[1])
   },
   
   find: function(entryId) {
-    var entry = $.grep(Siphon.Entries.list,
+    var entry = $.grep(Sift.Entries.list,
         function(entry) {
           return entry.id == entryId
         })
@@ -76,14 +94,14 @@ Siphon.Entries = {
 }
 
 
-Siphon.Entries.Entry = function(id, rating, updated) {
+Sift.Entries.Entry = function(id, rating, updated) {
   this.id = id
   this.rating = rating
   this.updated = updated
-  Siphon.Entries.list.push(this)
+  Sift.Entries.list.push(this)
 }
 
-Siphon.Entries.Entry.prototype = {
+Sift.Entries.Entry.prototype = {
   get element() {
     return $("#entry_" + this.id)
   }
@@ -107,11 +125,11 @@ $(document).ready(function() {
     return false
   })
   
-  Siphon.Entries.targetFirst()
+  Sift.Entries.targetFirst()
   
-  $(document).bind('keydown', 'j', Siphon.Entries.targetPrev)
-  $(document).bind('keydown', 'k', Siphon.Entries.targetNext)
-  $(document).bind('keydown', 'x', Siphon.Entries.toggleSelectedTarget)
-  $(document).bind('keydown', 'return', Siphon.Entries.showTarget)
+  $(document).bind('keydown', 'j', Sift.Entries.targetPrev)
+  $(document).bind('keydown', 'k', Sift.Entries.targetNext)
+  $(document).bind('keydown', 'x', Sift.Entries.toggleSelectedTarget)
+  $(document).bind('keydown', 'return', Sift.Entries.showTarget)
 })
 
