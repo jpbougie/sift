@@ -1,0 +1,82 @@
+@import compass/reset.sass
+@import compass/utilities/lists.sass
+@import compass/utilities/general.sass
+@import blueprint/screen.sass
+@import compass/utilities/links.sass
+
++global-reset
++blueprint
+
+!table_background = #E5E5E5
+!entry_border_color = rgb(200, 200, 200)
+
+=hidden
+  display: none
+
+#container
+  +container
+  
+  #header
+    +column(24, true)
+    margin-top: 10px
+    background: url(/images/funnel.png) no-repeat
+    padding-left: 60px
+  
+  #left-nav
+    +column(4)
+    
+  #content
+    +column(20, true)
+    
+    #entries
+      :background-color = !table_background
+      padding: 5px
+      
+      ul.list
+        +no-bullets
+        margin: 0
+      
+        li
+          padding: 7px
+          background-color: white
+          margin-top: -1px
+          border-top:
+            width: 1px
+            style: solid
+            :color = !entry_border_color
+          border-bottom:
+            width: 1px
+            style: solid
+            :color = !entry_border_color
+          
+          &:hover
+            :background-color = #f5f5f5
+          
+            .summary .rating
+              display: block
+        
+          &.selected
+            :background-color #d5e9fd
+          
+          &.target .summary .box
+            background: url(/images/target.png) 0px 3px no-repeat
+        
+          .summary
+            +clearfix
+            display: block
+            .meta h4
+              margin-bottom: 0
+              float: left
+              a
+                +hover-link
+                color: black
+            .rating
+              float: right
+              +hidden
+            .box
+              float: left
+              margin-right: 10px
+              padding-left: 7px
+
+.hidden
+  +hidden

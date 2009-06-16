@@ -1,0 +1,36 @@
+#entries
+  .actions
+    %a#back.hidden{ :href => "#" } Back to list
+    %span.select
+      Select
+      %a#select_all{ :href => "#"} All
+      ,
+      %a#select_none{ :href => "#"} None
+    %span.actions
+      %select#actions{:name => "actions"}
+        %option Actions
+        %option{ :disabled => true} Give rating
+        %option &#9734;
+        %option &#9734;&#9734;
+        %option &#9734;&#9734;&#9734;
+        %option &#9734;&#9734;&#9734;&#9734;
+        %option &#9734;&#9734;&#9734;&#9734;&#9734;
+  .display
+    %ul.list
+      - for entry in Sift::Entry.all
+        %li.entry.closed{ :id => "entry_#{entry.id}" }
+          .summary
+            .box
+              %input{ :type => "checkbox" }
+            .rating
+              - for i in 1..5
+                %input.star{:name => "rating_#{entry.id}", :type => "radio", :checked => i == entry.rating}
+            .meta
+              %h4
+                %a{ :href => "#entry/#{entry.id}"}= entry.entry
+          .details.hidden
+            = entry.entry
+
+%script{ :language => "javascript", :type => "text/javascript" }
+  - for entry in Sift::Entry.all
+    = "new Siphon.Entries.Entry(\"#{entry.id}\", #{entry.rating}, \"#{entry.updated_at}\")"
