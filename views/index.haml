@@ -33,4 +33,4 @@
 
 %script{ :language => "javascript", :type => "text/javascript" }
   - for entry in Sift::Entry.all
-    = "new Siphon.Entries.Entry(\"#{entry.id}\", #{entry.rating}, \"#{entry.updated_at}\")"
+    = "new Sift.Entries.Entry(\"#{entry.id}\", #{entry.rating || 0}, \"#{entry.updated_at}\")"

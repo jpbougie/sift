@@ -1,3 +1,22 @@
+$.fn.scrollTo = function(el, speed) {
+    var target,
+    container
+    if (typeof el == 'number' || !el) {
+        speed = el
+        target = this
+        container = 'html,body'
+    } else {
+        target = el
+        container = this
+    }
+    var offset = $(target).offset().top - 30
+    $(container).animate({
+        scrollTop: offset
+    },
+    speed || 1000)
+    return this
+}
+
 Sift = {
 }
 
@@ -127,8 +146,8 @@ $(document).ready(function() {
   
   Sift.Entries.targetFirst()
   
-  $(document).bind('keydown', 'j', Sift.Entries.targetPrev)
-  $(document).bind('keydown', 'k', Sift.Entries.targetNext)
+  $(document).bind('keydown', 'k', Sift.Entries.targetPrev)
+  $(document).bind('keydown', 'j', Sift.Entries.targetNext)
   $(document).bind('keydown', 'x', Sift.Entries.toggleSelectedTarget)
   $(document).bind('keydown', 'return', Sift.Entries.showTarget)
 })
