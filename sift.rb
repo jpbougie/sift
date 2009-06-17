@@ -28,3 +28,17 @@ end
 get "/" do
   haml :index
 end
+
+post "/rate" do
+  content_type :json
+  # Receives a string like rating[<id>]=<rating>&rating[<id>]=<rating>&...
+  entries = params[:rating].collect do |id, rating|
+    if (0..5).include? rating.to_i
+      entry = Sift::Entry.get(id)
+      entry.rating = rating.to_i
+      entry.save
+      entry
+    end
+  end
+  entries.reject {|e| e.nil? }.to_json
+end

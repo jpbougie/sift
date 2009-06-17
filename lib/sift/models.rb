@@ -12,6 +12,10 @@ module Sift
     attr_accessor :database
     attr_accessor :queue_server
     attr_accessor :yahoo_appid
+    
+    def queue
+      @queue ||= MemCache.new Sift.queue_server
+    end
   end
   
   class Entry < CouchRest::ExtendedDocument  
@@ -28,9 +32,9 @@ module Sift
     end
     
     def push_job
-      payload = { :key => self.id, :question => self.entry }
-      queue = MemCache.new(Sift.queue_server)
-      queue.set("stanford", payload.to_json, 0, true)
+      payload = { "key" => self.id, "question" => self.entry }
+      Sift.queue.set("stanford", payload.to_json, 0, true)
+      true
     end
 
   end

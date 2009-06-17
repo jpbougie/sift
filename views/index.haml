@@ -22,9 +22,10 @@
           .summary
             .box
               %input{ :type => "checkbox" }
-            .rating
+            %ul.rating
               - for i in 1..5
-                %input.star{:name => "rating_#{entry.id}", :type => "radio", :checked => i == entry.rating}
+                %li.star
+                  %a{ :href => "#", :class => (entry.rating && i <= entry.rating) ? "active" : "" }= i.to_s
             .meta
               %h4
                 %a{ :href => "#entry/#{entry.id}"}= entry.entry
