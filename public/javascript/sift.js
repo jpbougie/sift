@@ -81,9 +81,20 @@ Sift.Entries = {
         }
     })
     
-    active.find(".details").removeClass("hidden")
-    $('#back').removeClass("hidden")
-    $('#entries .select').addClass("hidden")
+    window.location.hash = "entries/" + entry
+    active.find(".details").show()
+    $('#back').show()
+    $('#entries .select').hide()
+  },
+  
+  backToList: function() {
+    active = Sift.Entries.active
+    $('#entries .entry').show()
+    $("#entry_" + active).find(".details").hide()
+    $('#back').hide()
+    $('#entries .select').show()
+    window.location.hash = ""
+    Sift.Entries.active = null
   },
   
   adjustViewForTarget: function() {
@@ -175,6 +186,13 @@ $(document).ready(function() {
     $('#entries :checkbox').removeAttr('checked').change()
     return false
   })
+  
+  $('#entries .meta a').click(function() {
+    Sift.Entries.showEntry($(this).closest(".entry").attr("id").split("_")[1])
+    return false
+  })
+  
+  $('#back').click(Sift.Entries.backToList)
   
   $('.rating a').click(function() {
     rating = parseInt(this.innerText)
