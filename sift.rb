@@ -12,6 +12,7 @@ require 'sift/models'
 configure do
   require 'config/sift.rb'
   Sift.connect_database
+  Sift.queue # to initialize it, otherwise it sometimes times out
   Compass.configuration do |config|
     config.project_path = File.dirname(__FILE__)
     config.sass_dir     = File.join('views', 'stylesheets')

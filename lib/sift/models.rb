@@ -27,11 +27,11 @@ module Sift
 
     timestamps!
   
-    save_callback :after do |object|
-      object.push_job
+    create_callback :after do |object|
+      object.post_job
     end
     
-    def push_job
+    def post_job
       payload = { "key" => self.id, "question" => self.entry }
       Sift.queue.set("stanford", payload.to_json, 0, true)
       true
