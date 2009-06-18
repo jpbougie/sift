@@ -30,7 +30,13 @@
               %h4
                 %a{ :href => "#entry/#{entry.id}"}= entry.entry
           .details.hidden
-            = entry.entry
+            - if entry.stanford
+              - for domain in entry.stanford["wordnet-firstlevelsplit"]["result"]
+                %ul.domain
+                  - for possibility in domain
+                    %li= possibility
+            - else
+              %em This entry hasn't been parsed yet
 
 %script{ :language => "javascript", :type => "text/javascript" }
   - for entry in Sift::Entry.all

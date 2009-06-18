@@ -36,7 +36,7 @@
         +no-bullets
         margin: 0
       
-        li
+        & > li
           padding: 7px
           background-color: white
           margin-top: -1px
@@ -54,7 +54,8 @@
           
             .summary .rating
               display: block
-        
+          &.active:hover
+            background-color: white
           &.selected
             :background-color #d5e9fd
           
@@ -78,6 +79,11 @@
               float: left
               margin-right: 10px
               padding-left: 7px
+          .details
+            padding-left: 10px
+            ul.domain
+              border: 1px solid #d5e9fd
+              margin-bottom: 10px
 
 .hidden
   +hidden
