@@ -17,10 +17,19 @@
       #header
         %h1 Sift
       #left-nav
-        %a{ :href => "/new" } Add a new entry
+        %a#show-entry-form{ :href => "/new" } Add a new entry
         %ul
-          %li New
-          %li Accepted
-          %li Rejected
+          %li
+            %a{:href => "/?rating=none"} Unrated
+          %li          
+            %a{:href => "/?rating=1"} 1 star
+          %li          
+            %a{:href => "/?rating=2"} 2 stars
+          %li          
+            %a{:href => "/?rating=3"} 3 stars
+          %li          
+            %a{:href => "/?rating=4"} 4 stars
+          %li          
+            %a{:href => "/?rating=5"} 5 stars
       #content
         = yield

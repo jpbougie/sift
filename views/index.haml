@@ -1,3 +1,9 @@
+#new-entry
+  %form{:action => "/new", :method => "post"}
+    %input#entry{:type => "text", :name => "entry", :value => "Question"}
+    %input{:type => "submit", :value => "Create"}
+    or
+    %a#cancel-entry-form{ :href => "#"} cancel
 #entries
   .actions
     %a#back.hidden{ :href => "#" } Back to list
@@ -10,14 +16,14 @@
       %select#actions{:name => "actions"}
         %option Actions
         %option{ :disabled => true} Give rating
-        %option &#9734;
-        %option &#9734;&#9734;
-        %option &#9734;&#9734;&#9734;
-        %option &#9734;&#9734;&#9734;&#9734;
-        %option &#9734;&#9734;&#9734;&#9734;&#9734;
+        %option{ :value => "rate-1" } &#9734;
+        %option{ :value => "rate-2" } &#9734;&#9734;
+        %option{ :value => "rate-3" } &#9734;&#9734;&#9734;
+        %option{ :value => "rate-4" } &#9734;&#9734;&#9734;&#9734;
+        %option{ :value => "rate-5" } &#9734;&#9734;&#9734;&#9734;&#9734;
   .display
     %ul.list
-      - for entry in Sift::Entry.all
+      - for entry in @entries
         %li.entry.closed{ :id => "entry_#{entry.id}" }
           .summary
             .box
@@ -38,6 +44,8 @@
             - else
               %em This entry hasn't been parsed yet
 
+#pagination
+  %a{ :href => next_page_url(@entries) } Next Page
 %script{ :language => "javascript", :type => "text/javascript" }
-  - for entry in Sift::Entry.all
+  - for entry in @entries
     = "new Sift.Entries.Entry(\"#{entry.id}\", #{entry.rating || 0}, \"#{entry.updated_at}\")"

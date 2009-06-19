@@ -204,6 +204,37 @@ $(document).ready(function() {
     return false
   })
   
+  $('#entry').focus(function() {
+    el = $(this)
+    if(el.val() == "Question") {
+      el.val("")
+    }
+  })
+  
+  $('#entry').blur(function() {
+    el = $(this)
+    if(el.val() == "") {
+      el.val("Question")
+    }
+  })
+  
+  $("#show-entry-form").click(function() {
+    $('#new-entry').show()
+    return false
+  })
+  
+  $("#cancel-entry-form").click(function() {
+    $('#new-entry').hide()
+    return false
+  })
+  
+  $("#actions").change(function() {
+    v = $(this).val()
+    if(m = v.match(/^rate-(\d)/)) {
+      Sift.Entries.rateSelected(m[1])
+    }
+  })
+  
   Sift.Entries.targetFirst()
   
   $(document).bind('keydown', 'k', Sift.Entries.targetPrev)

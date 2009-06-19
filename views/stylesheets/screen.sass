@@ -28,6 +28,17 @@
   #content
     +column(20, true)
     
+    #new-entry
+      +hidden
+      margin: 10px 0
+      padding: 10px
+      :background= !table_background + 20
+      :border= 1px solid !entry_border_color
+      
+      #entry
+        font-size: 3em
+        :color= !entry_border_color
+    
     #entries
       :background-color = !table_background
       padding: 5px

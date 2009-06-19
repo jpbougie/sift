@@ -1,6 +1,9 @@
 require 'rubygems'
 require 'sinatra'
 
+gem 'haml-edge'
+require 'haml'
+
 gem 'chriseppstein-compass'
 require 'compass'
 
@@ -19,14 +22,66 @@ configure do
   end
 end
 
+helpers do
+  def next_page_url(entries)
+    url = []
+    if !entries.empty?
+      url.unshift("start=" + entries.last.id)
+    end
+
+    if params[:limit]
+      url.unshift("limit=" + params[:limit])
+    end
+    
+    if params[:rating]
+      url.unshift("rating=" + params[:rating])
+    end
+    
+    if params[:descending]
+      url.unshift("descending=" + params[:descending])
+    end
+    
+    "/?" + url.join("&")
+  end
+end
+
 get "/stylesheets/:name.css" do |name|
   content_type 'text/css'
 
   # Use views/stylesheets & blueprint's stylesheet dirs in the Sass load path
-  sass :"stylesheets/#{name}", :sass => Compass.sass_engine_options
+  sass :"stylesheets/#{name}", Compass.sass_engine_options
 end
 
 get "/" do
+  opts = {}
+  
+  if params[:limit]
+    opts[:limit] = params[:limit]
+  end
+  
+  if params[:rating]
+    if params[:rating] == "none"
+      opts[:rating] = nil
+    else
+      opts[:rating] = params[:rating].to_i
+    end
+  end
+  
+  if params[:start]
+    opts[:start] = params[:start]
+  end
+  
+  if params[:descending]
+    opts[:descending] = params[:descending]
+  end
+  
+  if params.has_key? :previous
+    params[:start] = params[:previous]
+    opts[:start] = Sift::Entry.previous_start(params)
+  end
+  
+  @entries = Sift::Entry.paginate(opts)
+
   haml :index
 end
 
