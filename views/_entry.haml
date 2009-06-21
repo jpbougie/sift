@@ -1,0 +1,19 @@
+%li.entry.closed{ :id => "entry_#{entry.id}" }
+  .summary
+    .box
+      %input{ :type => "checkbox" }
+    %ul.rating
+      - for i in 1..5
+        %li.star
+          %a{ :href => "#", :class => (entry.rating && i <= entry.rating) ? "active" : "" }= i.to_s
+    .meta
+      %h4
+        %a{ :href => "#entry/#{entry.id}"}= entry.entry
+  .details.hidden
+    - if entry.stanford
+      - for domain in entry.stanford["wordnet-firstlevelsplit"]["result"]
+        %ul.domain
+          - for possibility in domain
+            %li= possibility
+    - else
+      %em This entry hasn't been parsed yet
