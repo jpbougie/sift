@@ -228,6 +228,19 @@ $(document).ready(function() {
     return false
   })
   
+  $("#new-entry-form").submit(function() {
+    
+    $.post("/new", $(this).serialize(), function(data, status) {
+      d = $(data)
+      $('#entries .list').prepend(d)
+      new Sift.Entries.Entry(d.attr('id').split("_")[1], null, null)
+      $('#new-entry').hide()
+      $('#entries .list li:first').css("background-color", "#F8FFBC")
+      $('#entries .list li:first').animate({backgroundColor: "#FFFFFF" }, "medium")
+    })
+    return false
+  })
+  
   $("#actions").change(function() {
     v = $(this).val()
     if(m = v.match(/^rate-(\d)/)) {

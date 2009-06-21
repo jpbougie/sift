@@ -25,6 +25,12 @@
   #left-nav
     +column(4)
     
+    h3
+      margin-top: 5px
+      margin-bottom: 5px
+    ul
+      +no-bullets
+    
   #content
     +column(20, true)
     
@@ -33,7 +39,7 @@
       margin: 10px 0
       padding: 10px
       :background= !table_background + 20
-      :border= 1px solid !entry_border_color
+      :border= 1px "solid" !entry_border_color
       
       #entry
         font-size: 3em

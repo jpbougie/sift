@@ -8,7 +8,7 @@
     %link{ :rel => 'stylesheet', :href => '/stylesheets/screen.css', :media => 'screen', :charset => 'utf-8' }
     %link{ :rel => 'stylesheet', :href => '/stylesheets/ratings.css', :media => 'screen', :charset => 'utf-8' }
     %script{ :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js", :type => "text/javascript", :charset => "utf-8" }.
-    %script{ :src => "/javascript/jquery.rating.js", :type => "text/javascript", :charset => "utf-8" }
+    %script{ :src => "/javascript/jquery.color.js", :type => "text/javascript", :charset => "utf-8" }
     %script{ :src => "/javascript/jquery.hotkeys.js", :type => "text/javascript", :charset => "utf-8" }
     %script{ :src => "/javascript/sift.js", :type => "text/javascript", :charset => "utf-8" }
     
@@ -18,7 +18,10 @@
         %h1 Sift
       #left-nav
         %a#show-entry-form{ :href => "/new" } Add a new entry
+        %h3 filter
         %ul
+          %li
+            %a{:href => "/"} All
           %li
             %a{:href => "/?rating=none"} Unrated
           %li          

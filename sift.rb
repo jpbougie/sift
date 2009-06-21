@@ -98,3 +98,9 @@ post "/rate" do
   end
   entries.reject {|e| e.nil? }.to_json
 end
+
+post "/new" do
+  e = Sift::Entry.new(:entry => params["entry"], :source => "manual")
+  e.save
+  haml :_entry, :locals => { :entry => e }, :layout => false
+end
