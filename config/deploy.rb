@@ -10,7 +10,7 @@ set :deploy_to, "/var/www/#{application}"
 
 set :scm, :git
 set :user, "siphon"
-set :branch, :master
+#set :branch, :master
 
 role :app, "jpbougie.net"
 role :web, "jpbougie.net"
