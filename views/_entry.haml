@@ -11,7 +11,8 @@
         %a{ :href => "#entry/#{entry.id}"}= entry.entry
   .details.hidden
     - if entry.stanford
-      - for domain in entry.stanford["wordnet-firstlevelsplit"]["result"]
+      - for split, domain in entry.stanford["firstlevelsplit"]["result"].zip(entry.stanford["wordnet-firstlevelsplit"]["result"])
+        %h3= "Objects: " + split.join(", ")
         %ul.domain
           - for possibility in domain
             %li= possibility
