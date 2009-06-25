@@ -129,7 +129,7 @@ Sift.Entries = {
       id = $(entry).attr('id').split("_")[1]
       Sift.Entries.find(id).rating = rating
       
-      Sift.Ratings.select($("#entry_" + id + " .rating"), rating)
+      Sift.Ratings.select($("#entry_" + id + " .summary .rating"), rating)
       return 'rating[' + id + ']=' + rating
     })
     
@@ -194,7 +194,7 @@ $(document).ready(function() {
   
   $('#back').click(Sift.Entries.backToList)
   
-  $('.rating a').click(function() {
+  $('.summary .rating a').click(function() {
     rating = parseInt(this.innerText)
     Sift.Ratings.select($(this).closest('.rating'), rating)
     
