@@ -43,6 +43,10 @@ helpers do
     
     "/?" + url.join("&")
   end
+  
+  def make_stars(current_rating = nil)
+    haml :stars, :locals => { :current_rating => current_rating}, :layout => false
+  end
 end
 
 get "/stylesheets/:name.css" do |name|
@@ -85,6 +89,7 @@ get "/" do
   haml :index
 end
 
+# rate the entry itself
 post "/rate" do
   content_type :json
   # Receives a string like rating[<id>]=<rating>&rating[<id>]=<rating>&...
@@ -99,8 +104,23 @@ post "/rate" do
   entries.reject {|e| e.nil? }.to_json
 end
 
+post "/rate/:feature/:id" do
+  entry = Sift::Entry.get(params[:id])
+  entry.features_rating ||= {}
+  entry.features_rating[params[:feature]] = params[:rating].to_i
+  entry.save
+  "ok"
+end
+
 post "/new" do
   e = Sift::Entry.new(:entry => params["entry"], :source => "manual")
   e.save
   haml :_entry, :locals => { :entry => e }, :layout => false
 end
+
+__END__
+@@stars
+%ul.rating
+  - for i in 1..5
+    %li.star
+      %a{ :href => "#", :class => (current_rating && i <= current_rating) ? "active" : "" }= i.to_s

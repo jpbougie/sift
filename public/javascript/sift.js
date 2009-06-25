@@ -204,6 +204,17 @@ $(document).ready(function() {
     return false
   })
   
+  $('.details .rating a').click(function () {
+    rating = parseInt(this.innerText)
+    elem = $(this)
+    Sift.Ratings.select(elem.closest('.rating'), rating)
+    
+    id = elem.closest('.entry').attr('id').split("_")[1]
+    feature = elem.closest('.technique').attr("id")
+    $.post('/rate/' + feature + "/" + id, "rating=" + rating)
+    return false
+  })
+  
   $('#entry').focus(function() {
     el = $(this)
     if(el.val() == "Question") {

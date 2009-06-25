@@ -24,6 +24,7 @@ module Sift
     property :rating
     property :tags
     property :stanford
+    property :features_rating
     
     timestamps!
     

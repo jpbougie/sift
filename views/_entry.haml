@@ -11,10 +11,33 @@
         %a{ :href => "#entry/#{entry.id}"}= entry.entry
   .details.hidden
     - if entry.stanford
-      - for split, domain in entry.stanford["firstlevelsplit"]["result"].zip(entry.stanford["wordnet-firstlevelsplit"]["result"])
-        %h3= "Objects: " + split.join(", ")
-        %ul.domain
-          - for possibility in domain
-            %li= possibility
+      #splitting-techniques.technique-container
+        %h3 Splitting techniques
+        #firstlevel.technique
+          %h4 First-level split
+          = make_stars(entry.features_rating && entry.features_rating["firstlevel"])
+          %ol
+            - for split in entry.stanford["firstlevelsplit"]["result"]
+              %li
+                %ol
+                  - for object in split
+                    %li= object
+        #bottom-up.technique.last
+          %h4 Bottom-up
+          = make_stars(entry.features_rating && entry.features_rating["bottom-up"])
+      #domain-extraction.technique-container
+        %h3 Domain Extraction
+        #simple-wndomains.technique
+          %h4 Simple WordNet domains with tf-idf
+          %ul.rating
+            = make_stars(entry.features_rating && entry.features_rating["simple-wndomains"])
+          %ol
+            - for domain in entry.stanford["wordnet-firstlevelsplit"]["result"]
+              %li
+                %ol.domain
+                  - for possibility in domain
+                    %li= possibility
+      %div{:style => "clear: both"}
+        %em Rate each feature individually using the stars
     - else
       %em This entry hasn't been parsed yet
