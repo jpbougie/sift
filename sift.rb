@@ -85,6 +85,7 @@ get "/" do
   end
   
   @entries = Sift::Entry.paginate(opts)
+  @counts = Sift::Entry.counts
 
   haml :index
 end

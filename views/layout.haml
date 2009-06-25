@@ -21,18 +21,18 @@
         %h3 filter
         %ul
           %li
-            %a{:href => "/"} All
+            %a{:href => "/"}= "All (#{Sift::Entry.count})"
           %li
-            %a{:href => "/?rating=none"} Unrated
+            %a{:href => "/?rating=none"}= "Unrated (#{Sift::Entry.count(:rating => nil)})"
           %li          
-            %a{:href => "/?rating=1"} 1 star
+            %a{:href => "/?rating=1"}= "1 star (#{@counts[1]})"
           %li          
-            %a{:href => "/?rating=2"} 2 stars
+            %a{:href => "/?rating=2"}= "2 stars (#{@counts[2]})"
           %li          
-            %a{:href => "/?rating=3"} 3 stars
+            %a{:href => "/?rating=3"}= "3 stars (#{@counts[3]})"
           %li          
-            %a{:href => "/?rating=4"} 4 stars
+            %a{:href => "/?rating=4"}= "4 stars (#{@counts[4]})"
           %li          
-            %a{:href => "/?rating=5"} 5 stars
+            %a{:href => "/?rating=5"}= "5 stars (#{@counts[5]})"
       #content
         = yield

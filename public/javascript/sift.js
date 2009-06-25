@@ -259,6 +259,10 @@ $(document).ready(function() {
     }
   })
   
+  if(window.location.hash.match(/^#entries/)) {
+    Sift.Entries.showEntry(window.location.hash.split("/")[1])
+  }
+  
   Sift.Entries.targetFirst()
   
   $(document).bind('keydown', 'k', Sift.Entries.targetPrev)

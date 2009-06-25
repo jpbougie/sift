@@ -36,6 +36,18 @@ module Sift
                emit(null, null);
              }
            }"
+           
+    view_by :counts,
+        :map =>
+          "function(doc) {
+            if(doc['couchrest-type'] == 'Sift::Entry') {
+               emit(doc['rating'], 1);
+             }
+          }",
+        :reduce =>
+          "function(key, values, rereduce) {
+            return sum(values)
+          }"
     
     create_callback :after do |object|
       object.post_job
@@ -66,6 +78,15 @@ module Sift
       else
         self.all view_params
       end
+    end
+    
+    def self.counts
+      result = {}
+      (by_counts :reduce => true, :group => true)["rows"].each do |row|
+        result[row["key"].to_i] = row["value"]
+      end
+      
+      result
     end
     
     def previous_start(params = {})
