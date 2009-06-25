@@ -25,6 +25,6 @@ namespace :deploy do
     end
     
     task :restart, :roles => :app, :except => { :no_release => true } do
-      run "god restart sift"
+      sudo "god restart thin-sift"
     end
 end
