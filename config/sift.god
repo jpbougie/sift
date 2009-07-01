@@ -28,7 +28,7 @@ Dir[config_path + "/*.yml"].each do |file|
       
       w.restart = "thin restart -C #{file} -o #{number}"
  
-      pid_path = config["chdir"] + "/" + config["pid"]
+      pid_path = config["pid"]
       ext = File.extname(pid_path)
  
       w.pid_file = pid_path.gsub(/#{ext}$/, ".#{number}#{ext}")
