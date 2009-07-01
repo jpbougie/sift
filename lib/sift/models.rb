@@ -49,7 +49,7 @@ module Sift
             return sum(values)
           }"
     
-    create_callback :after do |object|
+    save_callback :after do |object|
       object.post_job
     end
     
