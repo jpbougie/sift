@@ -17,22 +17,22 @@
           %h4 First-level split
           = make_stars(entry.features_rating && entry.features_rating["firstlevel"])
           %ol
-             - for split in entry.stanford["clausesplit"]["result"]
-               %li
-                 %h5.phrase= split["part"]
-                 %ol
-                   - for object in split["objects"]
-                     %li= object
+            - for split in entry.stanford["firstlevelsplit"]["result"]
+              %li
+                %h5.phrase= split["part"]
+                %ol
+                  - for object in split["objects"]
+                    %li= object["value"]
         #clauses.technique.last
           %h4 Clause Split
-          = make_stars(entry.features_rating && entry.features_rating["bottom-up"])
+          = make_stars(entry.features_rating && entry.features_rating["clauses"])
           %ol
             - for split in entry.stanford["clausesplit"]["result"]
               %li
                 %h5.phrase= split["part"]
                 %ol
                   - for object in split["objects"]
-                    %li= object
+                    %li= object["value"]
 
       #domain-extraction.technique-container
         %h3 Domain Extraction
