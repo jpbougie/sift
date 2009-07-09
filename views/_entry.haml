@@ -46,6 +46,18 @@
                 %ol.domain
                   - for possibility in domain
                     %li= possibility
+          
+        - if entry.stanford["wordnet-causesplit"]
+          #simple-wndomains.technique
+            %h4 Simple WordNet domains with tf-idf (clause split)
+            %ul.rating
+              = make_stars(entry.features_rating && entry.features_rating["simple-wndomains"])
+            %ol
+              - for domain in entry.stanford["wordnet-causesplit"]["result"]
+                %li
+                  %ol.domain
+                    - for possibility in domain
+                      %li= possibility
       %div{:style => "clear: both"}
         %em Rate each feature individually using the stars
     - else

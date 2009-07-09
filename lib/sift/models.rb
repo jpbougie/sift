@@ -53,10 +53,15 @@ module Sift
       object.post_job
     end
     
-    def post_job
-      payload = { "key" => self.id, "question" => self.entry }
-      Sift.queue.set("stanford", payload.to_json, 0, true)
-      true
+    def post_job(_retry=true)
+      begin
+        payload = { "key" => self.id, "question" => self.entry }
+        Sift.queue.set("stanford", payload.to_json, 0, true)
+      rescue Exception => e
+        if _retry
+          self.post_job(false)
+        end
+      end
     end
     
     # Paginate the entries according to the following params
@@ -158,7 +163,7 @@ module Sift
     end
     
     def self.load_as_entries
-      questions = self.find_by_category(:cid => "396545469")["ResultSet"]["Question"]
+      questions = find_by_category(:cid => "396545469")["ResultSet"]["Question"]
       
       for q in questions
         e = Entry.new(:entry => q["Subject"], :source => q["Link"])

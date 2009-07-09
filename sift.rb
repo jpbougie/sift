@@ -90,6 +90,12 @@ get "/" do
   haml :index
 end
 
+get "/more" do
+  Sift::Question.load_as_entries
+  
+  redirect "/"
+end
+
 # rate the entry itself
 post "/rate" do
   content_type :json
