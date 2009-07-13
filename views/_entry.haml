@@ -41,20 +41,22 @@
           %ul.rating
             = make_stars(entry.features_rating && entry.features_rating["simple-wndomains"])
           %ol
-            - for domain in entry.stanford["wordnet-firstlevelsplit"]["result"]
+            - for domain, part in entry.stanford["wordnet-clausesplit"]["result"].zip(entry.stanford["clausesplit"]["result"])
               %li
+                %h5.phrase= part["part"]
                 %ol.domain
                   - for possibility in domain
                     %li= possibility
           
-        - if entry.stanford["wordnet-causesplit"]
-          #simple-wndomains.technique
-            %h4 Simple WordNet domains with tf-idf (clause split)
+        - if entry.stanford["wordnettopics-clausesplit"]
+          #simple-wntopics.technique
+            %h4 Wordnet Topics
             %ul.rating
-              = make_stars(entry.features_rating && entry.features_rating["simple-wndomains"])
+              = make_stars(entry.features_rating && entry.features_rating["simple-wntopics"])
             %ol
-              - for domain in entry.stanford["wordnet-causesplit"]["result"]
+              - for domain, part in entry.stanford["wordnettopics-clausesplit"]["result"].zip(entry.stanford["clausesplit"]["result"])
                 %li
+                  %h5.phrase= part["part"]
                   %ol.domain
                     - for possibility in domain
                       %li= possibility
