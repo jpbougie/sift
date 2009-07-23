@@ -205,7 +205,7 @@ $(document).ready(function() {
   })
   
   $('.details .rating a').click(function () {
-    rating = parseInt(this.innerText)
+    rating = parseInt(this.innerText.replace(/\W/g, ''))
     elem = $(this)
     Sift.Ratings.select(elem.closest('.rating'), rating)
     

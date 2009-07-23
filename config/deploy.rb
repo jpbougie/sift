@@ -1,6 +1,6 @@
 default_run_options[:pty] = true
 
-set :port, 29209
+#set :port, 29209
 set :use_sudo, :false
 
 set :application, "sift"
@@ -9,14 +9,14 @@ set :repository,  "git://github.com/jpbougie/sift.git"
 set :deploy_to, "/var/www/#{application}"
 
 set :scm, :git
-set :user, "siphon"
+set :user, "bozzon"
 #set :branch, :master
 
-role :app, "jpbougie.net"
-role :web, "jpbougie.net"
-role :db,  "jpbougie.net", :primary => true
+role :app, "131.175.57.39"
+role :web, "131.175.57.39"
+role :db,  "131.175.57.39", :primary => true
 
-set :config_path, "/home/siphon/config"
+set :config_path, "/usr/local/sift/config"
 
 
 namespace :deploy do
@@ -25,6 +25,6 @@ namespace :deploy do
     end
     
     task :restart, :roles => :app, :except => { :no_release => true } do
-      sudo "god restart thin-sift"
+      run "touch #{current_path}/restart.txt"
     end
 end
